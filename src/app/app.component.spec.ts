@@ -1,12 +1,35 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { RegisterFormComponent } from './register-form/register-form.component';
+import { SharedMaterialModule } from './shared-material/shared-material.module';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatStepperModule, MatProgressSpinnerModule } from '@angular/material';
+import { StudentLookupComponent } from './student-lookup/student-lookup.component';
+import { GenerateConfirmEmailComponent } from './generate-confirm-email/generate-confirm-email.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import {APP_BASE_HREF} from '@angular/common';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        RegisterFormComponent,
+        StudentLookupComponent,
+        GenerateConfirmEmailComponent,
+        ConfirmEmailComponent
       ],
+      imports: [
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedMaterialModule,
+        MatStepperModule,
+        MatProgressSpinnerModule 
+      ],
+      providers: [{provide: APP_BASE_HREF, useValue : '/' }]
     }).compileComponents();
   }));
 
@@ -14,18 +37,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'angular'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('angular');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular!');
   });
 });

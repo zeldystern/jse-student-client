@@ -1,0 +1,36 @@
+<section>
+  <div layout="column" layout-align="center center" style="text-align:center">
+    <h3>Confirm Email</h3>
+    <form [formGroup]="generateConfirmEmailForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label class="sr-only" for="email">Email</label>
+        <div>
+          <mat-form-field>
+            <input type="text" matInput class="form-control" id="email" formControlName="email" placeholder="Email" email>
+          </mat-form-field>
+        </div>
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+
+          <div *ngIf="email.errors.required">
+            Email is required.
+          </div>
+
+          <div *ngIf="email.errors.email">
+            Email must be valid.
+          </div>
+        </mat-error>
+        <mat-progress-spinner *ngIf="loading" style="margin:0 auto;" mode="indeterminate" diameter="20">
+        </mat-progress-spinner>
+        <mat-error *ngIf="generateConfirmEmailError">
+          {{ generateConfirmEmailError }}
+        </mat-error>
+        <div style="color:blue" *ngIf="confirmationEmailSentMessage"> 
+          {{ confirmationEmailSentMessage }}
+        </div>
+      </div>
+      <div style="padding-top:20px"> 
+        <button [disabled]="!generateConfirmEmailForm.valid" type="submit" color="primary" mat-raised-button>Send Confirmation Email</button>
+      </div>
+    </form>
+  </div>
+</section>
