@@ -1,14 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ActivatedRoute } from "@angular/router";
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedMaterialModule } from '../shared-material/shared-material.module';
+import { UniqueUserNameValidator } from '../validators/user-validation.directive';
+import { PasswordValidation } from '../validators/password-validation';
+import { StudentService } from '../services/student.service';
+
 import { LoginCredentialsComponent } from './login-credentials.component';
 
-describe('LoginCredentialsComponent', () => {
+fdescribe('LoginCredentialsComponent', () => {
   let component: LoginCredentialsComponent;
   let fixture: ComponentFixture<LoginCredentialsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginCredentialsComponent ]
+      declarations: [ LoginCredentialsComponent ],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        SharedMaterialModule
+      ],
+      providers: [ StudentService, PasswordValidation, UniqueUserNameValidator ]
     })
     .compileComponents();
   }));
@@ -19,7 +32,7 @@ describe('LoginCredentialsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 });

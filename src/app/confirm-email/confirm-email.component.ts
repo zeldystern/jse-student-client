@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Router } from '@angular/router';
 
-import { SharedMaterialModule } from '../shared-material/shared-material.module';
-
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student';
 
@@ -36,7 +34,7 @@ export class ConfirmEmailComponent implements OnInit {
                   this.confirmEmailSuccess = response.success;  
                   setTimeout(() => {
                     this.router.navigate(['login-credentials','student_id', this.student_id ]);
-                  }, 5000);      
+                  }, 3000);      
                 }
                 this.loading = false;
 			},

@@ -18,8 +18,8 @@ export class StudentService {
        this.url = GLOBAL.url;
   }
     
-  findStudent(dob: string, ssn: string): Observable<any> {
-      const json = JSON.stringify({ dob: dob, ssn: ssn });
+  findStudent(dob: string, ssn: string, email: string): Observable<any> {
+      const json = JSON.stringify({ dob: dob, ssn: ssn, email: email });
       const params = `json=${json}`;
       const headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
 
@@ -53,7 +53,7 @@ export class StudentService {
   }
   
   isUserNameTaken(userName: string): Observable<boolean> {
-      const json = JSON.stringify({ userName: userName });
+      const json = JSON.stringify({ userName: encodeURIComponent(userName) });
       const params = `json=${json}`;
       const headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
 
@@ -65,7 +65,7 @@ export class StudentService {
   saveLoginCredentials(student_id: number, userName: string, userPass: string) : Observable<any> {
       const json = JSON.stringify({ 
         studentId: student_id, 
-        userLogin: userName,
+        userLogin: encodeURIComponent(userName),
         userPassword: userPass 
       });
       const params = `json=${json}`;

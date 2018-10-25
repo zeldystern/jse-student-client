@@ -12,14 +12,9 @@ import { Student } from '../models/student';
 
 import { ConfirmEmailComponent } from './confirm-email.component';
 
+import { ActivatedRouteMock } from './confirm-email.component.mock';
+
 describe('ConfirmEmailComponent', () => {
-  const fakeActivatedRoute = {
-    snapshot: { paramMap: {
-        student_id: '13525',
-        token: 'abcd'
-      } 
-    }
-  } as ActivatedRoute;
   
   let component: ConfirmEmailComponent;
   let fixture: ComponentFixture<ConfirmEmailComponent>;
@@ -28,7 +23,7 @@ describe('ConfirmEmailComponent', () => {
     TestBed.configureTestingModule({
       imports: [ HttpClientModule, HttpModule, SharedMaterialModule ],
       declarations: [ ConfirmEmailComponent ],
-      providers: [ StudentService, {provide: ActivatedRoute, useValue: fakeActivatedRoute}  ]
+      providers: [ StudentService, {provide: ActivatedRoute, useValue: ActivatedRouteMock}  ]
     })
     .compileComponents();
   }));

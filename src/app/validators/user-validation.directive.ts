@@ -10,8 +10,22 @@ import {
 import { catchError, map } from 'rxjs/operators';
 import { StudentService } from '../services/student.service';
 
+@Injectable({ providedIn: 'root' })
+export class UniqueUserNameValidator implements AsyncValidator {
+  constructor(private studentService: StudentService) {}
+
+  validate(
+    ctrl: AbstractControl
+  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+    return this.studentService.isUserNameTaken(ctrl.value).pipe(
+      map(isTaken => ((isTaken == true) ? { userNameIsNotUnique: true } : null)),
+      catchError(() => null)
+    );
+  }
+}
+
 @Directive({
-  selector: '[userNameValidator]', 
+  selector: '[appUniqueUserName]',
   providers: [
     {
       provide: NG_ASYNC_VALIDATORS,
@@ -20,18 +34,11 @@ import { StudentService } from '../services/student.service';
     }
   ]
 })
-export class UniqueUserNameValidator implements AsyncValidator {
-  
-  constructor(private studentService: StudentService) {}
 
-  validate(ctrl: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-      return this.studentService.isUserNameTaken(ctrl.value).pipe(
-      map(isTaken => ((isTaken == true) ? { userNameIsNotUnique: true } : null )),
-      catchError(() => null))
+export class UniqueUserNameValidatorDirective {
+  constructor(private validator: UniqueUserNameValidator) {}
+  
+  validate(control: AbstractControl) {
+    this.validator.validate(control);
   }
 }
-
-
-
-
-

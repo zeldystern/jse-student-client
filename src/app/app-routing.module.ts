@@ -2,16 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { RegisterFormComponent } from './register-form/register-form.component';
 import { StudentLookupComponent } from './student-lookup/student-lookup.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
-import { GenerateConfirmEmailComponent } from './generate-confirm-email/generate-confirm-email.component';
 import { LoginCredentialsComponent } from './login-credentials/login-credentials.component';
+import { ComingSoonComponent } from './home/coming-soon/coming-soon.component';
 
 const routes: Routes = [
   {
+    path: 'home',
+    component: ComingSoonComponent, 
+  },
+  {
     path: 'register',
-    component: RegisterFormComponent,
+    component: StudentLookupComponent,
   },
   {
     path: 'confirm-email/student_id/:student_id/token/:token',
@@ -23,8 +26,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'register',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    component: ComingSoonComponent
   }
 ];
 

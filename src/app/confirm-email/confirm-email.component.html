@@ -1,19 +1,12 @@
-<main role="main">
-  <div layout="column" layout-align="center center" style="text-align: center">
-    <h3>Confirm Email</h3>
-  <mat-progress-spinner *ngIf="loading" style="margin:0 auto;" mode="indeterminate" diameter="20">
-  </mat-progress-spinner>
-  <div layout="column" layout-align="center center"  style="text-align:center">
-    <mat-error color="red" *ngIf="confirmEmailError">
+<div class="text-center center-page mb-4 mt-5 ">
+    <h1 class="h3 mb-4 font-weight-normal">Confirm Email</h1>
+  <spinner [show]="loading"></spinner>
+    <alert type="danger" *ngIf="confirmEmailError">
       {{ confirmEmailError }}
-    </mat-error>
-    <div *ngIf="confirmEmailSuccess">
-      <div>
+    </alert>
+    <alert type="success" *ngIf="confirmEmailSuccess">  
         {{ confirmEmailSuccess }}
-        You will be redirected to <a [routerLink]="['login-credentials','student_id',student_id]">Login Credentials...</a>
-      </div>
-    </div>
-  </div>
- </div>
-</main>
+        You will be redirected to <a [routerLink]="['login-credentials','student_id',student_id]">Login Credentials...</a>  
+    </alert>
+</div>
   

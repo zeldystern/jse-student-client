@@ -1,59 +1,78 @@
-  <section>
-    <div layout="column" layout-align="center center"  style="text-align:center">
-      <h3>Identification</h3>
-      <form [formGroup]="studentLookupForm" (ngSubmit)="onSubmit()" >
-        <div class="form-group">
-          <input type="hidden" [formControl]="validStudent">
-          <label class="sr-only" for="dob">Date of Birth (MM/DD/YYYY)</label>
-          <div>
-            <mat-form-field>
-              <input matInput [matDatepicker]="picker" id="dob" [formControl]="dob" placeholder="Date of Birth">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <mat-error color="red" *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+<div class="text-center mb-4 mt-5">
+  <h1 class="h3 mb-4 font-weight-normal">Sign-up</h1>
+  <h2 class="h4 mb-4 font-weight-normal text-muted">Please enter the following information so that we can link to your existing JSE account.</h2>
+  <form class="center-page" [formGroup]="studentLookupForm" (ngSubmit)="onSubmit()" >
 
-            <div *ngIf="dob.errors.required">
-              DOB is required.
-            </div>
-            
-            <div *ngIf="dob.errors.pattern">
-              Date of Birth must be MM/DD/YYYY format. {{dob.value}}
-            </div>
-          </mat-error>
-        </div>
-        <div class="form-group">
-          <label class="sr-only" for="ssn">Last 4 SSN</label>
-          <div>
-            <mat-form-field>
-              <input type="text" matInput class="form-control" id="ssn" formControlName="ssn" placeholder="Last 4 SSN">
-            </mat-form-field>
-          </div>
-          <mat-error *ngIf="ssn.invalid && (ssn.dirty || ssn.touched)">
+    <div class="form-label-group">
+      <input type="text" class="form-control" formControlName="dob" id="dob" [formControl]="dob" placeholder="Date of Birth" bsDatepicker autofocus>
+      <label for="dob">Date of Birth (MM/DD/YYYY)</label>
+    </div>
+    <alert type="danger" *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+           <div *ngIf="dob.errors.required">
+        DOB is required.
+      </div>
+      <div *ngIf="dob.errors.pattern">
+        Date of Birth must be MM/DD/YYYY format. {{dob.value}}
+      </div>
+    </alert>
 
-            <div *ngIf="ssn.errors.required">
-              SSN is required.
-            </div>
-            
-            <div *ngIf="ssn.errors.pattern">
-              SSN must be the last 4 digits of your SSN.
-            </div>
-          </mat-error>
-        </div>
-        <mat-progress-spinner *ngIf="loading" style="margin:0 auto;" mode="indeterminate" diameter="20">
-        </mat-progress-spinner>
-        <mat-error *ngIf="studentLookupError">
-          {{ studentLookupError }}
-        </mat-error>
-        <div style="color:blue" *ngIf="student"> 
-          {{ student.firstName }} {{ student.lastName }}
-        </div>1
-        <div style="padding-top:20px"> 
-          <button style="margin-right: 2px" [disabled]="!(dob.valid && ssn.valid)" type="submit" color="primary" mat-raised-button mat-button>Lookup</button>
-          <button style="margin-left: 2px" [disabled]="!student" color="accent" mat-raised-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </div>  
-</section>
+    <div class="form-label-group">
+
+
+      <input type="text" class="form-control" id="ssn" formControlName="ssn" placeholder="Last 4 SSN">
+      <label for="ssn">Last 4 SSN</label>
+    </div>
+    <alert type="danger" *ngIf="ssn.invalid && (ssn.dirty || ssn.touched)">
+
+           <div *ngIf="ssn.errors.required">
+        SSN is required.
+      </div>
+
+      <div *ngIf="ssn.errors.pattern">
+        SSN must be the last 4 digits of your SSN.
+      </div>
+    </alert>
+
+
+
+    <div class="form-label-group">
+
+
+      <input type="email" id="email" class="form-control"  formControlName="email" placeholder="Email">
+      <label for="email">Your email at JSE</label>
+
+    </div>
+
+    <alert type="danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+
+           <div *ngIf="email.errors.required">
+        Email is required.
+      </div>
+
+      <div *ngIf="email.errors.email">
+        Email must be a valid email address.
+      </div>
+    </alert>
+
+    <alert type="danger" *ngIf="studentLookupError">
+      {{ studentLookupError }}
+    </alert>
+    <alert type="success" *ngIf="studentLookupSuccess"> 
+      {{ studentLookupSuccess }}
+    </alert>
+    <alert type="danger" *ngIf="sendConfirmEmailError">
+      {{ sendConfirmEmailError }}
+    </alert>
+    <alert type="success" *ngIf="sendConfirmEmailSuccess"> 
+      {{ sendConfirmEmailSuccess }}
+    </alert>
+    <spinner [show]="loading">
+      spinner
+    </spinner>
+    <div class="mt-3"> 
+      <button class="btn btn-lg btn-primary" type="submit" [disabled]="!studentLookupForm.valid" type="submit">Look up</button>
+    </div>
+  </form>
+</div>  
+
 

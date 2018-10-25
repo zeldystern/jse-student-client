@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { SharedMaterialModule } from '../shared-material/shared-material.module';
 import { UniqueUserNameValidator } from '../validators/user-validation.directive';
 import { PasswordValidation } from '../validators/password-validation';
 import { StudentService } from '../services/student.service';
@@ -19,12 +19,12 @@ export class LoginCredentialsComponent implements OnInit {
   public loading: boolean;
   
   loginCredentialsForm = this.formBuilder.group({
-    userName: ['',Validators.compose([Validators.required, Validators.minLength(6)]), this.uniqueUsernameValidator.validate.bind(this.uniqueUsernameValidator)],
+    userName: ['',{validators: [Validators.required, Validators.minLength(6)],asyncValidators: [this.uniqueUserNameValidator.validate.bind(this.uniqueUserNameValidator)], updateOn:'blur'}],
     passwordGroup: this.formBuilder.group({
-      password: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      confirmPassword: ['', Validators.compose([Validators.required])]
+      password: ['', {validators: [Validators.required, Validators.minLength(8)],updateOn:'blur'}],
+      confirmPassword: ['', {validators: [Validators.required]}]
     }, {
-      validator: PasswordValidation.MatchPassword
+      validator: PasswordValidation.MatchPassword, updateOn:'blur'
     })
   },
   { updateOn: 'blur' }
@@ -53,11 +53,16 @@ export class LoginCredentialsComponent implements OnInit {
 			response => {
 				if(response.error){
 					this.loginCredentialsError = response.error;
+                    this.loading = false;
 				}
                 else {
                   this.loginCredentialsSuccess = response.success;
+                  this.loading = false;
+                  setTimeout(() => {
+                    this.router.navigate(['home','student_id', this.student_id ]);
+                  }, 3000); 
                 }
-                this.loading = false;
+                
 			},
 			error =>{
 				console.log(<any>error);
@@ -71,8 +76,9 @@ export class LoginCredentialsComponent implements OnInit {
   get confirmPassword() { return this.loginCredentialsForm.get('passwordGroup').get('confirmPassword'); }
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private formBuilder: FormBuilder,
               private _studentService: StudentService,
-              private uniqueUsernameValidator: UniqueUserNameValidator){}
+              private uniqueUserNameValidator: UniqueUserNameValidator){}
 
 }
