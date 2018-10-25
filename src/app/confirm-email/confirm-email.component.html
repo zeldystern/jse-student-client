@@ -1,9 +1,11 @@
 <div class="text-center center-page mb-4 mt-5 ">
     <h1 class="h3 mb-4 font-weight-normal">Confirm Email</h1>
-  <spinner [show]="loading"></spinner>
+    <spinner [show]="loading"></spinner>
     <alert type="danger" *ngIf="confirmEmailError">
       {{ confirmEmailError }}
+      Please sign-up again.
     </alert>
+    <button class="btn btn-lg btn-primary" *ngIf="confirmEmailError" [routerLink]="['/register']">Sign-up Page</button>
     <alert type="success" *ngIf="confirmEmailSuccess">  
         {{ confirmEmailSuccess }}
         You will be redirected to <a [routerLink]="['login-credentials','student_id',student_id]">Login Credentials...</a>  
