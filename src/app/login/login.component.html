@@ -1,0 +1,31 @@
+<div class="text-center mb-4 mt-5">
+  <h1 class="h3 mb-4 font-weight-normal">Login</h1>
+  <h2 class="h6 mb-3 font-weight-normal text-muted">Please enter your log in credentials.</h2>
+  <form class="center-page" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+    <div class="form-label-group">
+      <label for="userName">User Name</label>
+      <input type="text" class="form-control" id="userName"
+             formControlName="userName" placeholder="User Name">
+    </div>
+    <div class="form-label-group clearfix">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password"
+             formControlName="password" placeholder="Password">
+      <span class="float-right small"><a routerLink="/forgot-password">Forgot password</a></span>
+    </div>
+    <div>Not an online member yet?<BR>Click <a routerLink="/register">here</a> to sign up.</div>
+    <spinner [show]="loading"></spinner>
+    <div class="mt-2">
+      <alert type="danger" *ngIf="loginError">
+        {{ loginError }}
+      </alert>
+      <alert type="success" *ngIf="loginSuccess"> 
+        {{ loginSuccess }}
+      </alert>
+    </div>
+    <div style="padding-top:20px"> 
+      <button class="btn btn-lg btn-primary" [disabled]="!loginForm.valid" type="submit">Log in</button>
+    </div>
+  </form>
+</div>
+

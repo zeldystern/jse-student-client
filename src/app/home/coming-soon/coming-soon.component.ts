@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./coming-soon.component.scss']
 })
 export class ComingSoonComponent implements OnInit {
-
+  
+  public loading: false;
+  
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

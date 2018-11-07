@@ -29,7 +29,8 @@
             "styles": [
               "node_modules/font-awesome/scss/font-awesome.scss",
               "src/styles.scss",
-              "src/theme.scss"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",

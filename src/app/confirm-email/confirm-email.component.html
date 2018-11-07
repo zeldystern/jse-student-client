@@ -3,7 +3,6 @@
     <spinner [show]="loading"></spinner>
     <alert type="danger" *ngIf="confirmEmailError">
       {{ confirmEmailError }}
-      Please sign-up again.
     </alert>
     <button class="btn btn-lg btn-primary" *ngIf="confirmEmailError" [routerLink]="['/register']">Sign-up Page</button>
     <alert type="success" *ngIf="confirmEmailSuccess">  

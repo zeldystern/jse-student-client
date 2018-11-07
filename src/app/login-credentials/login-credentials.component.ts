@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { UniqueUserNameValidator } from '../validators/user-validation.directive';
 import { PasswordValidation } from '../validators/password-validation';
 import { StudentService } from '../services/student.service';
+import { SUCCESS_MSG, ERROR_MSG, PAGE_TEXT } from '../services/strings';
 
 @Component({
   selector: 'login-credentials-app',
@@ -16,10 +17,12 @@ export class LoginCredentialsComponent implements OnInit {
   public student_id: number;
   public loginCredentialsError: string;
   public loginCredentialsSuccess: string;
+  public loginCredentialsInstructions: string;
+  public userToken: string;
   public loading: boolean;
   
   loginCredentialsForm = this.formBuilder.group({
-    userName: ['',{validators: [Validators.required, Validators.minLength(6)],asyncValidators: [this.uniqueUserNameValidator.validate.bind(this.uniqueUserNameValidator)], updateOn:'blur'}],
+    userName: ['',{validators: [Validators.required, Validators.minLength(6), Validators.pattern('^[^#.,?=&]*$')] ,asyncValidators: [this.uniqueUserNameValidator.validate.bind(this.uniqueUserNameValidator)], updateOn:'blur'}],
     passwordGroup: this.formBuilder.group({
       password: ['', {validators: [Validators.required, Validators.minLength(8)],updateOn:'blur'}],
       confirmPassword: ['', {validators: [Validators.required]}]
@@ -32,6 +35,8 @@ export class LoginCredentialsComponent implements OnInit {
  
  ngOnInit() {
     this.student_id = +this.route.snapshot.paramMap.get("student_id");
+    this.loginCredentialsInstructions = PAGE_TEXT.login_credentials_instructions;
+    
     this.loginCredentialsForm.valueChanges.subscribe(  
       (form: any) => {  
         this.loginCredentialsError = ''; 
@@ -57,15 +62,23 @@ export class LoginCredentialsComponent implements OnInit {
 				}
                 else {
                   this.loginCredentialsSuccess = response.success;
+                  this.userToken = JSON.stringify(response.success);
+                  localStorage.setItem('userToken', this.userToken);
                   this.loading = false;
                   setTimeout(() => {
-                    this.router.navigate(['home','student_id', this.student_id ]);
+                    this.router.navigate(['home'],{
+                      queryParams: {
+                        'student_id':this.student_id,
+                        'userToken':this.userToken
+                      }
+                    })
                   }, 3000); 
                 }
                 
 			},
 			error =>{
 				console.log(<any>error);
+                this.loginCredentialsError = ERROR_MSG.error_saving_credentials+' '+ERROR_MSG.contact_jse;
                 this.loading = false;
 			}
 		);
